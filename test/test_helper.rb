@@ -13,7 +13,7 @@ class ActiveSupport::TestCase
   include ApplicationHelper
 
   # Add more helper methods to be used by all tests here...
-  
+
   # テストユーザーとしてログインする
   def log_in_as(user)
     session[:user_id] = user.id
@@ -26,8 +26,16 @@ class ActiveSupport::TestCase
 end
 
 class ActionDispatch::IntegrationTest
-  def log_in_as(user, password: 'password')
+  # テストユーザーとしてログインする
+  def log_in_as(user, password: 'password', remember_me: '1')
     post login_path, params: { session: { email: user.email,
-                                          password: password } }
+                                          password: password,
+                                          remember_me: remember_me } }
   end
+
+  # テストユーザーとしてログインする（パスワードを省略）
+  # def log_in_as(user, password: 'password')
+  #   post login_path, params: { session: { email: user.email,
+  #                                         password: password } }
+  # end
 end
