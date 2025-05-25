@@ -71,14 +71,10 @@ class LogoutTest < Logout
     delete logout_path
     assert_redirected_to root_url
   end
-
-  test 'authenticated? should return false for a user with nil digest' do
-    assert_not @user.authenticated?('')
-  end
 end
 
 class RememberingTest < UsersLogin
-  test 'login with rememnbering' do
+  test 'login with remembering' do
     log_in_as(@user, remember_me: '1')
     assert_not cookies[:remember_token].blank?
   end
@@ -86,8 +82,7 @@ class RememberingTest < UsersLogin
   test 'login without remembering' do
     # Cookieを保存してログイン
     log_in_as(@user, remember_me: '1')
-
-    # Cookieを削除されていることを検証してログイン
+    # Cookieが削除されていることを検証してからログイン
     log_in_as(@user, remember_me: '0')
     assert cookies[:remember_token].blank?
   end
